@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Planet</title>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <script type="text/javascript" src="./js/main.js"></script>
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      var CURRENT_PLANET = null;
+
+      init();
+
+      loadPlanets();
+    });
+  </script>
+</head>
+
+<body>
+  <div id="app">
+    <!-- Modal: Article -->
+    <div id="article-modal">
+      <div class="article-modal-content">
+        <div id="article-modal-toolbar">
+          <div id="article-modal-avatar"></div>
+          <div id="article-modal-title"></div>
+          <div id="article-modal-close" onclick="closeArticleModal()"></div>
+        </div>
+        <iframe id="article-modal-iframe"></iframe>
+      </div>
+    </div>
+
+    <!-- Modal: New Post -->
+    <div id="new-post-modal">
+      <div class="new-post-modal-content">
+        <div id="new-post-modal-toolbar">
+          <div id="new-post-modal-avatar"></div>
+          <div id="new-post-modal-title">New Post</div>
+          <div id="new-post-modal-close" onclick="closeNewPostModal()"></div>
+        </div>
+        <div id="new-post-modal-form">
+          <input id="new-post-title" type="text" placeholder="Title" name="title">
+          <textarea id="new-post-content" placeholder="Content" name="content"></textarea>
+          <div id="new-post-attachments">
+            <input id="new-post-attachment" type="file" name="attachment">
+          </div>
+          <div id="new-post-buttons">
+            <button class="btn" id="new-post-modal-submit" onclick="submitNewPost()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="top">My Planets</div>
+    <div id="content">
+      <!-- Planets -->
+      <div class="planets">
+        <template>
+          <div class="planet">
+            <div class="planet-avatar"></div>
+            <div class="planet-info">
+              <div class="planet-title"></div>
+              <div class="planet-description"></div>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!--<div class="page-break"></div>-->
+
+      <!-- Details of a Planet -->
+      <div class="planet-details">
+        <div class="planet-details-top">
+          <div class="planet-avatar"></div>
+          <div class="planet-info">
+            <div class="planet-title"></div>
+            <div class="planet-description"></div>
+          </div>
+        </div>
+        <div class="planet-details-stats">
+          <div class="planet-details-buttons"></div>
+          <div class="planet-details-count"></div>
+        </div>
+        <div class="planet-articles-list">
+          <div class="planet-article-item">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="bottom"></div>
+  </div>
+</body>
+
+</html>
