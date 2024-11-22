@@ -25,7 +25,9 @@
         <div id="article-modal-toolbar">
           <div id="article-modal-avatar"></div>
           <div id="article-modal-title"></div>
-          <div id="article-modal-close" onclick="closeArticleModal()"></div>
+          <div id="article-modal-planet" class="article-modal-btn"><img src="./img/planet.svg" style="width: 16px; height: 16px;" /></div>
+          <div id="article-modal-external-link" class="article-modal-btn"><img src="./img/external-link.svg" style="width: 16px; height: 16px;" /></div>
+          <div id="article-modal-close" class="article-modal-btn" onclick="closeArticleModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
         </div>
         <iframe id="article-modal-iframe"></iframe>
       </div>
@@ -37,7 +39,7 @@
         <div id="new-post-modal-toolbar">
           <div id="new-post-modal-avatar"></div>
           <div id="new-post-modal-title">New Post</div>
-          <div id="new-post-modal-close" onclick="closeNewPostModal()"></div>
+          <div id="new-post-modal-close" class="article-modal-btn" onclick="closeNewPostModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
         </div>
         <div id="new-post-modal-form">
           <input id="new-post-title" type="text" placeholder="Title" name="title">
@@ -75,7 +77,7 @@
           <div class="planet-avatar"></div>
           <div class="planet-info">
             <div class="planet-title"></div>
-            <div class="planet-description"></div>
+            <div class="planet-description"><span class="placeholder">No Planet Selected</span></div>
           </div>
         </div>
         <div class="planet-details-stats">

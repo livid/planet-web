@@ -80,6 +80,7 @@ body {
   border-radius: 50%;
   margin: 10px;
   background-size: cover;
+  box-shadow: var(--small-shadows);
 }
 
 .planet-info {
@@ -172,11 +173,12 @@ body {
   -webkit-backdrop-filter: blur(16px);
   transition: display 0.5s;
 }
+
 .article-modal-content, .new-post-modal-content {
   display: block;
   margin: auto;
-  width: 92vw;
-  height: 80vh;
+  width: 96vw;
+  height: 92vh;
   box-sizing: border-box;
   box-shadow: var(--shadows);
   position: absolute;
@@ -222,7 +224,7 @@ body {
   box-sizing: content-box;
 }
 
-#article-modal-close, #new-post-modal-close {
+.article-modal-btn {
   background-color: #000;
   color: #fff;
   border-top: 1px solid rgb(182, 182, 182);
@@ -232,13 +234,19 @@ body {
   font-size: 14px;
   padding: 5px;
   cursor: pointer;
-  background-image: url('../img/x.png');
   background-size: 10px 10px;
   image-rendering: pixelated;
   background-repeat: no-repeat;
   background-position: center;
   width: 1em;
   height: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.article-modal-btn>img {
+  pointer-events: none;
 }
 
 #article-modal-iframe {
@@ -283,6 +291,11 @@ body {
   background-color: #fff;
   box-shadow: var(--shadows);
   cursor: pointer;
+}
+
+.placeholder {
+  opacity: 0.25;
+  font-weight: 500;
 }
 
 .new-post-modal-content {

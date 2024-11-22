@@ -36,6 +36,14 @@ const openArticleModal = (planet, article) => {
   const avatar = document.getElementById('article-modal-avatar');
   const title = document.getElementById('article-modal-title');
   const iframe = document.getElementById('article-modal-iframe');
+  const externalLinkButton = document.getElementById('article-modal-external-link');
+  externalLinkButton.onclick = () => {
+    window.open(articleLink, '_blank');
+  };
+  const planetButton = document.getElementById('article-modal-planet');
+  planetButton.onclick = () => {
+    window.open(`/${planet.id}/`, '_blank');
+  };
   const articleLink = `/${planet.id}/${article.id}/`;
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -87,6 +95,15 @@ const loadPlanets = async () => {
 
         planetList.appendChild(planetElement);
       });
+
+      /* Load the last selected Planet */
+      let lastSelectedPlanetId = localStorage.getItem('CURRENT_PLANET_ID');
+      if (lastSelectedPlanetId) {
+        let lastSelectedPlanet = planets.find(planet => planet.id === lastSelectedPlanetId);
+        if (lastSelectedPlanet) {
+          loadPlanet(lastSelectedPlanet);
+        }
+      }
     });
 }
 
@@ -94,6 +111,8 @@ const loadPlanet = async (planet) => {
   fetch(`/v0/planets/my/${planet.id}`)
     .then(response => response.json())
     .then(data => {
+      /* Remember the last selected Planet in local storage */
+      localStorage.setItem('CURRENT_PLANET_ID', data.id);
       CURRENT_PLANET = data;
       let planetDetails = document.querySelector('.planet-details');
       let planetAvatar = planetDetails.querySelector('.planet-avatar');
