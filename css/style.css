@@ -148,6 +148,19 @@ body {
   padding: 0px;
 }
 
+.loading {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary-color);
+  padding: 10px;
+  display: flex;
+  padding-left: 32px;
+  background-image: url("../img/spinner.gif");
+  background-size: 16px 16px;
+  background-repeat: no-repeat;
+  background-position: 10px 10px;
+}
+
 .planet-article-item {
   padding: 10px;
   font-size: 14px;

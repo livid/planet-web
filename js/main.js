@@ -58,6 +58,23 @@ const closeArticleModal = () => {
   document.body.style.overflow = 'scroll';
 }
 
+const showLoading = () => {
+  let planetArticlesList = document.querySelector('.planet-articles-list');
+  planetArticlesList.innerHTML = '';
+  let loading = document.createElement('div');
+  loading.classList.add('loading');
+  loading.innerText = 'Loading...';
+  planetArticlesList.appendChild(loading);
+}
+
+const hideLoading = () => {
+  let planetArticlesList = document.querySelector('.planet-articles-list');
+  let loadingElement = planetArticlesList.querySelector('.loading');
+  if (loadingElement) {
+    planetArticlesList.removeChild(loadingElement);
+  }
+}
+
 const loadPlanets = async () => {
   fetch(`/v0/planets/my`)
     .then(response => response.json())
@@ -142,6 +159,7 @@ const loadPlanet = async (planet) => {
 const loadArticles = async (planet) => {
   let planetArticlesList = document.querySelector('.planet-articles-list');
   planetArticlesList.innerHTML = '';
+  showLoading();
   fetch(`/v0/planets/my/${planet.id}/articles`)
     .then(response => response.json())
     .then(data => {
@@ -179,6 +197,7 @@ const loadArticles = async (planet) => {
 
         planetArticlesList.appendChild(planetArticleItem);
       });
+      hideLoading();
     });
 }
 
