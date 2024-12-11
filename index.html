@@ -56,6 +56,29 @@
       </div>
     </div>
 
+    <!-- Modal: Edit Post -->
+    <div id="edit-post-modal">
+      <div class="edit-post-modal-content">
+        <div id="edit-post-modal-toolbar">
+          <div id="edit-post-modal-avatar"></div>
+          <div id="edit-post-modal-title">Edit Post</div>
+          <div id="edit-post-modal-close" class="article-modal-btn" onclick="closeEditPostModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
+        </div>
+        <div id="edit-post-modal-form">
+          <input id="edit-post-title" type="text" placeholder="Title" name="title">
+          <textarea id="edit-post-content" placeholder="Content" name="content"></textarea>
+          <div id="edit-post-attachments">
+            <input id="edit-post-attachment" type="file" name="attachment">
+          </div>
+          <div id="edit-post-buttons">
+            <button class="btn" id="edit-post-modal-submit">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO: Merge duplicated code of New Post / Edit Post -->
+
     <div id="top">My Planets</div>
     <div id="content">
       <!-- Planets -->

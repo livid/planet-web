@@ -29,6 +29,14 @@ const init = () => {
   newPostModalContent.onclick = (e) => {
     e.stopPropagation();
   };
+  let editPostModal = document.getElementById('edit-post-modal');
+  editPostModal.onclick = () => {
+    closeEditPostModal();
+  };
+  let editPostModalContent = document.querySelector('.edit-post-modal-content');
+  editPostModalContent.onclick = (e) => {
+    e.stopPropagation();
+  };
 }
 
 const openArticleModal = (planet, article) => {
@@ -60,6 +68,11 @@ const openArticleModal = (planet, article) => {
       }
     });
   };
+  const editButton = document.getElementById('article-modal-edit');
+  editButton.onclick = () => {
+    closeArticleModal();
+    openEditArticleModal(planet, article);
+  };
   const articleLink = `/${planet.id}/${article.id}/`;
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
@@ -72,6 +85,54 @@ const closeArticleModal = () => {
   const modal = document.getElementById('article-modal');
   modal.style.display = 'none';
   document.body.style.overflow = 'scroll';
+}
+
+const openEditArticleModal = (planet, article) => {
+  let modal = document.getElementById('edit-post-modal');
+  let modalTitle = document.getElementById('edit-post-modal-title');
+  let avatar = document.getElementById('edit-post-modal-avatar');
+  modal.style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  modalTitle.textContent = `Edit Post on ${planet.name}: ${article.title}`;
+  avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
+  // Populate the edit post modal with the current article data
+  let title = document.getElementById('edit-post-title');
+  title.value = article.title;
+  let content = document.getElementById('edit-post-content');
+  content.value = article.content;
+  // Set up the submit button
+  let submitButton = document.getElementById('edit-post-modal-submit');
+  submitButton.onclick = () => {
+    submitEditPost(planet, article);
+  };
+}
+
+const closeEditPostModal = () => {
+  const modal = document.getElementById('edit-post-modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = 'scroll';
+}
+
+const submitEditPost = (planet, article) => {
+  let title = document.getElementById('edit-post-title').value;
+  let content = document.getElementById('edit-post-content').value;
+  let attachment = document.getElementById('edit-post-attachment').files[0];
+  let formData = new FormData();
+  formData.append('title', title);
+  formData.append('content', content);
+  formData.append('articleType', '0');
+  if (attachment) {
+    formData.append('attachment', attachment);
+  }
+  fetch(`/v0/planets/my/${planet.id}/articles/${article.id}`, {
+    method: 'POST',
+    body: formData
+  }).then(response => {
+    if (response.ok) {
+      closeEditPostModal();
+      loadArticles(planet);
+    }
+  });
 }
 
 const showLoading = () => {

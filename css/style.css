@@ -172,7 +172,7 @@ body {
   cursor: pointer;
 }
 
-#article-modal, #new-post-modal {
+#article-modal, #new-post-modal, #edit-post-modal {
   display: none;
   position: fixed;
   z-index: 1;
@@ -187,7 +187,7 @@ body {
   transition: display 0.5s;
 }
 
-.article-modal-content, .new-post-modal-content {
+.article-modal-content, .new-post-modal-content, .edit-post-modal-content {
   display: block;
   margin: auto;
   width: 96vw;
@@ -201,7 +201,7 @@ body {
   right: 0;
 }
 
-#article-modal-toolbar, #new-post-modal-toolbar {
+#article-modal-toolbar, #new-post-modal-toolbar, #edit-post-modal-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -210,7 +210,7 @@ body {
   gap: 1px;
 }
 
-#article-modal-avatar, #new-post-modal-avatar {
+#article-modal-avatar, #new-post-modal-avatar, #edit-post-modal-avatar {
   width: calc(1em + 8px);
   height: calc(1em + 8px);
   background-size: cover;
@@ -222,7 +222,7 @@ body {
   border-bottom: 1px solid rgb(97, 97, 97);
 }
 
-#article-modal-title, #new-post-modal-title {
+#article-modal-title, #new-post-modal-title, #edit-post-modal-title {
   flex: 1;
   font-size: 14px;
   font-weight: 500;
@@ -311,11 +311,11 @@ body {
   font-weight: 500;
 }
 
-.new-post-modal-content {
+.new-post-modal-content, .edit-post-modal-content {
   background-color: var(--body-color);
 }
 
-#new-post-modal-form {
+#new-post-modal-form, #edit-post-modal-form {
   display: flex;
   flex-direction: column;
   gap: 0px;
@@ -324,7 +324,7 @@ body {
   box-sizing: border-box;
 }
 
-#new-post-title {
+#new-post-title, #edit-post-title {
   width: 100%;
   box-sizing: border-box;
   font-size: 16px;
@@ -334,7 +334,7 @@ body {
   outline: none;
 }
 
-#new-post-content {
+#new-post-content, #edit-post-content {
   flex: 1;
   width: 100%;
   box-sizing: border-box;
@@ -346,14 +346,14 @@ body {
   resize: none;
 }
 
-#new-post-attachments {
+#new-post-attachments, #edit-post-attachments {
   display: flex;
   gap: 10px;
   padding: 10px;
   border-bottom: 1px solid var(--border-color);
 }
 
-#new-post-buttons {
+#new-post-buttons, #edit-post-buttons {
   display: flex;
   gap: 10px;
   padding: 10px;
