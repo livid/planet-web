@@ -76,6 +76,7 @@ const openArticleModal = (planet, article) => {
   const articleLink = `/${planet.id}/${article.id}/`;
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
   title.innerText = `${article.title}`;
   iframe.src = articleLink;
@@ -84,7 +85,8 @@ const openArticleModal = (planet, article) => {
 const closeArticleModal = () => {
   const modal = document.getElementById('article-modal');
   modal.style.display = 'none';
-  document.body.style.overflow = 'scroll';
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = 'auto';
 }
 
 const openEditArticleModal = (planet, article) => {
@@ -93,6 +95,7 @@ const openEditArticleModal = (planet, article) => {
   let avatar = document.getElementById('edit-post-modal-avatar');
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
   modalTitle.textContent = `Edit Post on ${planet.name}: ${article.title}`;
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
   // Populate the edit post modal with the current article data
@@ -110,7 +113,8 @@ const openEditArticleModal = (planet, article) => {
 const closeEditPostModal = () => {
   const modal = document.getElementById('edit-post-modal');
   modal.style.display = 'none';
-  document.body.style.overflow = 'scroll';
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = 'auto';
 }
 
 const submitEditPost = (planet, article) => {
@@ -284,6 +288,7 @@ const newPost = async (planet) => {
   let avatar = document.getElementById('new-post-modal-avatar');
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
+  document.documentElement.style.overflow = 'hidden';
   modalTitle.innerText = `New Post on ${planet.name}`;
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
 }
@@ -291,7 +296,8 @@ const newPost = async (planet) => {
 const closeNewPostModal = () => {
   let modal = document.getElementById('new-post-modal');
   modal.style.display = 'none';
-  document.body.style.overflow = 'scroll';
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = 'auto';
 }
 
 const submitNewPost = async () => {
