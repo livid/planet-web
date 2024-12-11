@@ -4,6 +4,7 @@
   --hover-color: rgba(255, 255, 255, 0.35);
   --content-max-width: 320px;
   --content-min-width: 280px;
+  --gap: 10px;
   --transition-duration: 0.15s;
   --shadows: 0 1px 2px rgba(0,0,0,0.03),
              0 2px 4px rgba(0,0,0,0.03),
@@ -50,8 +51,8 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  gap: 10px;
+  padding: var(--gap);
+  gap: var(--gap);
 }
 
 .planet {
@@ -116,7 +117,8 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   box-sizing: border-box;
-  margin-right: 10px;
+  margin-right: var(--gap);
+  margin-bottom: var(--gap);
 }
 
 .planet-details-top {
@@ -360,6 +362,27 @@ body {
 }
 
 @media screen and (max-width: 800px) {
+  :root {
+    --gap: 5px;
+  }
+
+  .planet {
+    max-width: 180px;
+    min-width: 100px;
+  }
+
+  .planet-avatar {
+    width: 20px;
+    height: 20px;
+  }
+
+  .planet-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .planet-description {
+    font-size: 12px;
+  }
   .article-modal-content, .new-post-modal-content, .edit-post-modal-content {
     width: 100vw;
     height: 100vh;
