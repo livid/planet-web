@@ -358,3 +358,10 @@ body {
   gap: 10px;
   padding: 10px;
 }
+
+@media screen and (max-width: 800px) {
+  .article-modal-content, .new-post-modal-content, .edit-post-modal-content {
+    width: 100vw;
+    height: 100vh;
+  }
+}
