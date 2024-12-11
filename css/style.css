@@ -193,8 +193,8 @@ body {
 .article-modal-content, .new-post-modal-content, .edit-post-modal-content {
   display: block;
   margin: auto;
-  width: calc(96% - env(safe-area-inset-left) - env(safe-area-inset-right));
-  height: calc(92% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  width: calc(100% - 40px - env(safe-area-inset-left) - env(safe-area-inset-right));
+  height: calc(100% - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   box-sizing: border-box;
   box-shadow: var(--shadows);
   position: absolute;
