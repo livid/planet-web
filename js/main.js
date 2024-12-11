@@ -36,6 +36,7 @@ const openArticleModal = (planet, article) => {
   const avatar = document.getElementById('article-modal-avatar');
   const title = document.getElementById('article-modal-title');
   const iframe = document.getElementById('article-modal-iframe');
+  // Set up buttons for the article modal
   const externalLinkButton = document.getElementById('article-modal-external-link');
   externalLinkButton.onclick = () => {
     window.open(articleLink, '_blank');
@@ -43,6 +44,21 @@ const openArticleModal = (planet, article) => {
   const planetButton = document.getElementById('article-modal-planet');
   planetButton.onclick = () => {
     window.open(`/${planet.id}/`, '_blank');
+  };
+  const trashButton = document.getElementById('article-modal-trash');
+  trashButton.onclick = () => {
+    // Add a confirmation dialog
+    if (!confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+    fetch(`/v0/planets/my/${planet.id}/articles/${article.id}`, {
+      method: 'DELETE'
+    }).then(response => {
+      if (response.ok) {
+        closeArticleModal();
+        loadArticles(planet);
+      }
+    });
   };
   const articleLink = `/${planet.id}/${article.id}/`;
   modal.style.display = 'block';
