@@ -90,6 +90,8 @@ const openArticleModal = (planet, article) => {
 }
 
 const closeArticleModal = () => {
+  const iframe = document.getElementById('article-modal-iframe');
+  iframe.src = 'about:blank';
   const modal = document.getElementById('article-modal');
   modal.style.display = 'none';
   document.body.style.overflow = 'auto';
