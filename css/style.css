@@ -137,7 +137,7 @@ body::-webkit-scrollbar {
   margin-bottom: var(--gap);
   margin-right: calc(env(safe-area-inset-right) + var(--gap));
   margin-left: var(--gap);
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 30px - (var(--gap) * 2));
 }
 
 .planet-details-top {
