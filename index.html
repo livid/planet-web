@@ -9,11 +9,12 @@
   <link rel="apple-touch-icon" href="./img/apple-touch-icon-180.png" sizes="180x180" type="image/png">
   <link rel="icon" type="image/png" href="./img/icon-192.png" sizes="192x192">
   <link rel="stylesheet" type="text/css" href="./css/style.css">
-  <script type="text/javascript" src="./js/main.js"></script>
   <script type="text/javascript">
+  var CURRENT_PLANET = null;
+  </script>
+  <script type="module">
+    import { init, loadPlanets } from './js/main.js';
     document.addEventListener('DOMContentLoaded', () => {
-      var CURRENT_PLANET = null;
-
       init();
 
       loadPlanets();
@@ -33,7 +34,7 @@
           <div id="article-modal-trash" class="article-modal-btn"><img src="./img/trash.svg" style="width: 16px; height: 16px;" /></div>
           <div id="article-modal-planet" class="article-modal-btn"><img src="./img/planet.svg" style="width: 16px; height: 16px;" /></div>
           <div id="article-modal-external-link" class="article-modal-btn"><img src="./img/external-link.svg" style="width: 16px; height: 16px;" /></div>
-          <div id="article-modal-close" class="article-modal-btn" onclick="closeArticleModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
+          <div id="article-modal-close" class="article-modal-btn"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
         </div>
         <iframe id="article-modal-iframe"></iframe>
       </div>
@@ -45,7 +46,7 @@
         <div id="new-post-modal-toolbar">
           <div id="new-post-modal-avatar"></div>
           <div id="new-post-modal-title">New Post</div>
-          <div id="new-post-modal-close" class="article-modal-btn" onclick="closeNewPostModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
+          <div id="new-post-modal-close" class="article-modal-btn"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
         </div>
         <div id="new-post-modal-form">
           <input id="new-post-title" type="text" placeholder="Title" name="title">
@@ -54,7 +55,7 @@
             <input id="new-post-attachment" type="file" name="attachment">
           </div>
           <div id="new-post-buttons">
-            <button class="btn" id="new-post-modal-submit" onclick="submitNewPost()">Submit</button>
+            <button class="btn" id="new-post-modal-submit">Submit</button>
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@
         <div id="edit-post-modal-toolbar">
           <div id="edit-post-modal-avatar"></div>
           <div id="edit-post-modal-title">Edit Post</div>
-          <div id="edit-post-modal-close" class="article-modal-btn" onclick="closeEditPostModal()"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
+          <div id="edit-post-modal-close" class="article-modal-btn"><img src="./img/close.svg" style="width: 16px; height: 16px;" /></div>
         </div>
         <div id="edit-post-modal-form">
           <input id="edit-post-title" type="text" placeholder="Title" name="title">

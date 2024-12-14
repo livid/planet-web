@@ -397,4 +397,8 @@ body::-webkit-scrollbar {
     width: calc(100% - env(safe-area-inset-left) - env(safe-area-inset-right));
     height: calc(100% - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   }
+
+  #new-post-content, #edit-post-content {
+    font-size: 16px;
+  }
 }

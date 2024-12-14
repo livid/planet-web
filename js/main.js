@@ -1,3 +1,5 @@
+import { addMarkdownAutocomplete } from './markdown.js';
+
 const formatDate = (date) => {
   const dateOptions = { weekday: undefined, year: 'numeric', month: 'short', day: 'numeric' };
   let ds = date.toLocaleDateString(undefined, dateOptions);
@@ -12,7 +14,7 @@ const formatTimestamp = (timestamp) => {
   return formatDate(date);
 }
 
-const init = () => {
+export function init() {
   let articleModal = document.getElementById('article-modal');
   articleModal.onclick = () => {
     closeArticleModal();
@@ -75,6 +77,10 @@ const openArticleModal = (planet, article) => {
     closeArticleModal();
     openEditArticleModal(planet, article);
   };
+  const closeButton = document.getElementById('article-modal-close');
+  closeButton.onclick = () => {
+    closeArticleModal();
+  };
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
@@ -104,10 +110,16 @@ const openEditArticleModal = (planet, article) => {
   title.value = article.title;
   let content = document.getElementById('edit-post-content');
   content.value = article.content;
+  addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
   // Set up the submit button
   let submitButton = document.getElementById('edit-post-modal-submit');
   submitButton.onclick = () => {
     submitEditPost(planet, article);
+  };
+  // Set up the close button
+  let closeButton = document.getElementById('edit-post-modal-close');
+  closeButton.onclick = () => {
+    closeEditPostModal();
   };
 }
 
@@ -157,7 +169,7 @@ const hideLoading = () => {
   }
 }
 
-const loadPlanets = async () => {
+export async function loadPlanets() {
   fetch(`/v0/planets/my`)
     .then(response => response.json())
     .then(data => {
@@ -292,6 +304,21 @@ const newPost = async (planet) => {
   document.documentElement.style.overflow = 'hidden';
   modalTitle.innerText = `New Post on ${planet.name}`;
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
+
+  let content = document.getElementById('new-post-content');
+  addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
+
+  // set up the submit button
+  let submitButton = document.getElementById('new-post-modal-submit');
+  submitButton.onclick = () => {
+    submitNewPost();
+  };
+
+  // set up the close button
+  let closeButton = document.getElementById('new-post-modal-close');
+  closeButton.onclick = () => {
+    closeNewPostModal();
+  };
 }
 
 const closeNewPostModal = () => {
