@@ -40,6 +40,8 @@ const init = () => {
 }
 
 const openArticleModal = (planet, article) => {
+  const cacheBuster = Math.random();
+  const articleLink = `/${planet.id}/${article.id}/?r=${cacheBuster}`;
   const modal = document.getElementById('article-modal');
   const avatar = document.getElementById('article-modal-avatar');
   const title = document.getElementById('article-modal-title');
@@ -73,7 +75,6 @@ const openArticleModal = (planet, article) => {
     closeArticleModal();
     openEditArticleModal(planet, article);
   };
-  const articleLink = `/${planet.id}/${article.id}/`;
   modal.style.display = 'block';
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
