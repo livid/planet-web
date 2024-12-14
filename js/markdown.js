@@ -5,40 +5,50 @@
  * @param {string[]} [options.listMarkers=['- ', '* ', '+ ']] - List markers to support
  * @param {boolean} [options.supportNumberedLists=false] - Whether to support numbered lists
  * @param {boolean} [options.supportTaskLists=true] - Whether to support task lists (- [ ])
- * @returns {function} Cleanup function to remove the event listener
+ * @param {Function} [options.onSubmit] - Callback function when Cmd/Ctrl + Enter is pressed
+ * @returns {function} Cleanup function to remove the event listeners
  */
-export function addMarkdownAutocomplete(textarea, options = {}) {
+function addMarkdownAutocomplete(textarea, options = {}) {
   const defaultOptions = {
     listMarkers: ['- ', '* ', '+ '],
     supportNumberedLists: false,
-    supportTaskLists: true
+    supportTaskLists: true,
+    onSubmit: () => console.log('Submit pressed')
   };
-
+  
   const config = { ...defaultOptions, ...options };
-
-  function handleEnterKey(e) {
-    if (e.key === 'Enter') {
+  
+  function handleKeydown(e) {
+    // Handle Cmd/Ctrl + Enter
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
-
+      config.onSubmit(textarea.value);
+      return;
+    }
+    
+    // Original Enter key handling
+    if (e.key === 'Enter' && !e.metaKey && !e.ctrlKey) {
+      e.preventDefault();
+      
       const value = textarea.value;
       const selectionStart = textarea.selectionStart;
-
+      
       // Get the current line before cursor
       const beforeCursor = value.substring(0, selectionStart);
       const lines = beforeCursor.split('\n');
       const currentLine = lines[lines.length - 1];
-
+      
       // Get the text after cursor
       const afterCursor = value.substring(selectionStart);
-
+      
       // Check for task list markers
-      const taskListMatch = config.supportTaskLists ?
+      const taskListMatch = config.supportTaskLists ? 
         currentLine.match(/^(\s*)-\s*\[([ x])\]\s*/) : null;
-
+      
       // Check for list markers if not a task list
       let listMarker = '';
       let isNumberedList = false;
-
+      
       if (taskListMatch) {
         const [, indent] = taskListMatch;
         // Always use unchecked checkbox for new tasks
@@ -48,11 +58,11 @@ export function addMarkdownAutocomplete(textarea, options = {}) {
         const unorderedMarkerMatch = currentLine.match(
           new RegExp(`^(\\s*)(${config.listMarkers.map(m => escapeRegExp(m)).join('|')})`)
         );
-
+        
         // Check numbered list if enabled
-        const numberedMarkerMatch = config.supportNumberedLists ?
+        const numberedMarkerMatch = config.supportNumberedLists ? 
           currentLine.match(/^(\s*)(\d+\.\s+)/) : null;
-
+        
         if (unorderedMarkerMatch) {
           const [, indent, marker] = unorderedMarkerMatch;
           listMarker = indent + marker;
@@ -62,19 +72,19 @@ export function addMarkdownAutocomplete(textarea, options = {}) {
           isNumberedList = true;
         }
       }
-
+      
       if (listMarker || isNumberedList) {
         // If line only contains the list marker, remove it
         const isEmptyTaskList = taskListMatch && currentLine.trim() === '- [ ]';
-        const isEmptyList = currentLine.trim() === listMarker.trim() ||
+        const isEmptyList = currentLine.trim() === listMarker.trim() || 
           (isNumberedList && currentLine.trim().match(/^\d+\.\s*$/));
-
+          
         if (isEmptyTaskList || isEmptyList) {
           lines[lines.length - 1] = '';
           textarea.value = lines.join('\n') + '\n' + afterCursor;
-          textarea.selectionStart = textarea.selectionEnd =
+          textarea.selectionStart = textarea.selectionEnd = 
             beforeCursor.length - listMarker.length + 1;
-        }
+        } 
         // Otherwise, add list marker to new line
         else {
           let newMarker = listMarker;
@@ -84,10 +94,10 @@ export function addMarkdownAutocomplete(textarea, options = {}) {
             newMarker += `${currentNumber + 1}. `;
           }
           textarea.value = beforeCursor + '\n' + newMarker + afterCursor;
-          textarea.selectionStart = textarea.selectionEnd =
+          textarea.selectionStart = textarea.selectionEnd = 
             selectionStart + 1 + newMarker.length;
         }
-      }
+      } 
       // No list marker, just add new line
       else {
         textarea.value = beforeCursor + '\n' + afterCursor;
@@ -95,23 +105,17 @@ export function addMarkdownAutocomplete(textarea, options = {}) {
       }
     }
   }
-
+  
   // Helper function to escape special regex characters
   function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   }
-
+  
   // Add event listener
-  textarea.addEventListener('keydown', handleEnterKey);
-
+  textarea.addEventListener('keydown', handleKeydown);
+  
   // Return cleanup function
-  return () => textarea.removeEventListener('keydown', handleEnterKey);
+  return () => textarea.removeEventListener('keydown', handleKeydown);
 }
 
-// Example usage:
-// const textarea = document.querySelector('textarea');
-// const cleanup = addMarkdownAutocomplete(textarea, {
-//   listMarkers: ['- ', '* '],
-//   supportNumberedLists: true,
-//   supportTaskLists: true
-// });
+export { addMarkdownAutocomplete };

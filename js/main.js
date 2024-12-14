@@ -112,7 +112,7 @@ const openEditArticleModal = (planet, article) => {
   title.value = article.title;
   let content = document.getElementById('edit-post-content');
   content.value = article.content;
-  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
+  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true, onSubmit: () => submitEditPost(planet, article) });
   // Set up the submit button
   let submitButton = document.getElementById('edit-post-modal-submit');
   submitButton.onclick = () => {
@@ -310,7 +310,7 @@ const newPost = async (planet) => {
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
 
   let content = document.getElementById('new-post-content');
-  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
+  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true, onSubmit: submitNewPost });
 
   // set up the submit button
   let submitButton = document.getElementById('new-post-modal-submit');
