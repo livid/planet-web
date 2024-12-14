@@ -23,6 +23,8 @@ html {
   padding: 0px;
   margin: 0px;
   overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--body-color);
 }
 
 body {
@@ -56,11 +58,17 @@ body::-webkit-scrollbar {
 .planets {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   padding: var(--gap);
   gap: var(--gap);
   margin-left: calc(env(safe-area-inset-left));
+  max-height: calc(100vh - 30px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--body-color);
+  position: sticky;
+  top: 30px;
+  box-sizing: border-box;
 }
 
 .planet {
@@ -127,6 +135,9 @@ body::-webkit-scrollbar {
   box-sizing: border-box;
   margin-bottom: var(--gap);
   margin-right: calc(env(safe-area-inset-right) + var(--gap));
+  margin-left: var(--gap);
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-color) var(--body-color);
 }
 
 .planet-details-top {

@@ -112,16 +112,18 @@ const openEditArticleModal = (planet, article) => {
   title.value = article.title;
   let content = document.getElementById('edit-post-content');
   content.value = article.content;
-  addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
+  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
   // Set up the submit button
   let submitButton = document.getElementById('edit-post-modal-submit');
   submitButton.onclick = () => {
+    cleanup();
     submitEditPost(planet, article);
   };
   // Set up the close button
   let closeButton = document.getElementById('edit-post-modal-close');
   closeButton.onclick = () => {
     closeEditPostModal();
+    cleanup();
   };
 }
 
@@ -308,17 +310,19 @@ const newPost = async (planet) => {
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
 
   let content = document.getElementById('new-post-content');
-  addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
+  let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true });
 
   // set up the submit button
   let submitButton = document.getElementById('new-post-modal-submit');
   submitButton.onclick = () => {
+    cleanup();
     submitNewPost();
   };
 
   // set up the close button
   let closeButton = document.getElementById('new-post-modal-close');
   closeButton.onclick = () => {
+    cleanup();
     closeNewPostModal();
   };
 }
