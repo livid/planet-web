@@ -133,6 +133,7 @@ body::-webkit-scrollbar {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   box-sizing: border-box;
+  box-shadow: var(--small-shadows);
   margin-top: var(--gap);
   margin-bottom: var(--gap);
   margin-right: calc(env(safe-area-inset-right) + var(--gap));
