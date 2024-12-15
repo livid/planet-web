@@ -174,52 +174,59 @@ const hideLoading = () => {
 }
 
 export async function loadPlanets() {
-  fetch(`/v0/planets/my`)
-    .then(response => response.json())
-    .then(data => {
-      let planets = data;
-      let planetList = document.querySelector('.planets');
+  try {
+    const response = await fetch(`/v0/planets/my`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const planets = await response.json();
+    let planetList = document.querySelector('.planets');
+    planetList.innerHTML = ''; // Clear existing content
 
-      planets.forEach(planet => {
-        let planetElement = document.createElement('div');
-        planetElement.classList.add('planet');
-        planetElement.onclick = () => {
-          loadPlanet(planet);
-        };
+    planets.forEach(planet => {
+      let planetElement = document.createElement('div');
+      planetElement.classList.add('planet');
+      planetElement.onclick = () => {
+        loadPlanet(planet);
+      };
 
-        let planetAvatar = document.createElement('div');
-        planetAvatar.classList.add('planet-avatar');
-        planetAvatar.style.backgroundImage = `url(/${planet.id}/avatar.png)`;
+      let planetAvatar = document.createElement('div');
+      planetAvatar.classList.add('planet-avatar');
+      planetAvatar.style.backgroundImage = `url(/${planet.id}/avatar.png)`;
 
-        let planetInfo = document.createElement('div');
-        planetInfo.classList.add('planet-info');
+      let planetInfo = document.createElement('div');
+      planetInfo.classList.add('planet-info');
 
-        let planetTitle = document.createElement('div');
-        planetTitle.classList.add('planet-title');
-        planetTitle.innerText = planet.name;
+      let planetTitle = document.createElement('div');
+      planetTitle.classList.add('planet-title');
+      planetTitle.innerText = planet.name;
 
-        let planetDescription = document.createElement('div');
-        planetDescription.classList.add('planet-description');
-        planetDescription.innerText = planet.about;
+      let planetDescription = document.createElement('div');
+      planetDescription.classList.add('planet-description');
+      planetDescription.innerText = planet.about;
 
-        planetInfo.appendChild(planetTitle);
-        planetInfo.appendChild(planetDescription);
+      planetInfo.appendChild(planetTitle);
+      planetInfo.appendChild(planetDescription);
 
-        planetElement.appendChild(planetAvatar);
-        planetElement.appendChild(planetInfo);
+      planetElement.appendChild(planetAvatar);
+      planetElement.appendChild(planetInfo);
 
-        planetList.appendChild(planetElement);
-      });
-
-      /* Load the last selected Planet */
-      let lastSelectedPlanetId = localStorage.getItem('CURRENT_PLANET_ID');
-      if (lastSelectedPlanetId) {
-        let lastSelectedPlanet = planets.find(planet => planet.id === lastSelectedPlanetId);
-        if (lastSelectedPlanet) {
-          loadPlanet(lastSelectedPlanet);
-        }
-      }
+      planetList.appendChild(planetElement);
     });
+
+    /* Load the last selected Planet */
+    let lastSelectedPlanetId = localStorage.getItem('CURRENT_PLANET_ID');
+    if (lastSelectedPlanetId) {
+      let lastSelectedPlanet = planets.find(planet => planet.id === lastSelectedPlanetId);
+      if (lastSelectedPlanet) {
+        await loadPlanet(lastSelectedPlanet);
+      }
+    }
+  } catch (error) {
+    console.error('Failed to load planets:', error);
+    let planetList = document.querySelector('.planets');
+    planetList.innerHTML = '<div class="error">Failed to load planets. Please try again later.</div>';
+  }
 }
 
 const loadPlanet = async (planet) => {
