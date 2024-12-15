@@ -122,8 +122,8 @@ const openEditArticleModal = (planet, article) => {
   // Set up the close button
   let closeButton = document.getElementById('edit-post-modal-close');
   closeButton.onclick = () => {
-    closeEditPostModal();
     cleanup();
+    closeEditPostModal();
   };
 }
 

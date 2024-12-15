@@ -23,6 +23,7 @@ function addMarkdownAutocomplete(textarea, options = {}) {
     if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
       e.preventDefault();
       config.onSubmit(textarea.value);
+      textarea.removeEventListener('keydown', handleKeydown);
       return;
     }
     
