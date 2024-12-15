@@ -254,13 +254,25 @@ const loadPlanet = async (planet) => {
     });
 }
 
+let currentLoadArticlesRequest = null;
+
 const loadArticles = async (planet) => {
+  if (currentLoadArticlesRequest) {
+    currentLoadArticlesRequest.abort();
+  }
+
+  const controller = new AbortController();
+  currentLoadArticlesRequest = controller;
+
   let planetArticlesList = document.querySelector('.planet-articles-list');
   planetArticlesList.innerHTML = '';
   showLoading();
-  fetch(`/v0/planets/my/${planet.id}/articles`)
+
+  fetch(`/v0/planets/my/${planet.id}/articles`, { signal: controller.signal })
     .then(response => response.json())
     .then(data => {
+      if (controller.signal.aborted) return;
+
       let planetDetails = document.querySelector('.planet-details');
       let planetArticlesCount = planetDetails.querySelector('.planet-details-count');
       if (data.length === 0) {
@@ -296,6 +308,10 @@ const loadArticles = async (planet) => {
         planetArticlesList.appendChild(planetArticleItem);
       });
       hideLoading();
+    })
+    .catch(error => {
+      if (error.name === 'AbortError') return;
+      console.error('Failed to load articles:', error);
     });
 }
 
