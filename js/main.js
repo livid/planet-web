@@ -268,51 +268,52 @@ const loadArticles = async (planet) => {
   planetArticlesList.innerHTML = '';
   showLoading();
 
-  fetch(`/v0/planets/my/${planet.id}/articles`, { signal: controller.signal })
-    .then(response => response.json())
-    .then(data => {
-      if (controller.signal.aborted) return;
+  try {
+    const response = await fetch(`/v0/planets/my/${planet.id}/articles`, { signal: controller.signal });
+    const data = await response.json();
+    
+    if (controller.signal.aborted) return;
 
-      let planetDetails = document.querySelector('.planet-details');
-      let planetArticlesCount = planetDetails.querySelector('.planet-details-count');
-      if (data.length === 0) {
-        planetArticlesCount.innerText = 'No posts';
-        return;
-      } else if (data.length === 1) {
-        planetArticlesCount.innerText = '1 post';
-      } else {
-        planetArticlesCount.innerText = `${data.length} posts`;
-      }
-      data.filter(article => article.articleType === 0).forEach(article => {
-        let planetArticleItem = document.createElement('div');
-        planetArticleItem.classList.add('planet-article-item');
+    let planetDetails = document.querySelector('.planet-details');
+    let planetArticlesCount = planetDetails.querySelector('.planet-details-count');
+    if (data.length === 0) {
+      planetArticlesCount.innerText = 'No posts';
+      return;
+    } else if (data.length === 1) {
+      planetArticlesCount.innerText = '1 post';
+    } else {
+      planetArticlesCount.innerText = `${data.length} posts`;
+    }
+    
+    data.filter(article => article.articleType === 0).forEach(article => {
+      let planetArticleItem = document.createElement('div');
+      planetArticleItem.classList.add('planet-article-item');
 
-        let articleTitle = '';
-        if (article.title.length > 50) {
-          articleTitle = article.title.substring(0, 50) + '...';
-        } else if (article.title.length === 0) {
-          if (article.content.length > 50) {
-            articleTitle = article.content.substring(0, 50) + '...';
-          } else {
-            articleTitle = article.content;
-          }
+      let articleTitle = '';
+      if (article.title.length > 50) {
+        articleTitle = article.title.substring(0, 50) + '...';
+      } else if (article.title.length === 0) {
+        if (article.content.length > 50) {
+          articleTitle = article.content.substring(0, 50) + '...';
         } else {
-          articleTitle = article.title;
+          articleTitle = article.content;
         }
-        planetArticleItem.innerText = articleTitle;
+      } else {
+        articleTitle = article.title;
+      }
+      planetArticleItem.innerText = articleTitle;
 
-        planetArticleItem.onclick = () => {
-          openArticleModal(planet, article);
-        };
+      planetArticleItem.onclick = () => {
+        openArticleModal(planet, article);
+      };
 
-        planetArticlesList.appendChild(planetArticleItem);
-      });
-      hideLoading();
-    })
-    .catch(error => {
-      if (error.name === 'AbortError') return;
-      console.error('Failed to load articles:', error);
+      planetArticlesList.appendChild(planetArticleItem);
     });
+    hideLoading();
+  } catch (error) {
+    if (error.name === 'AbortError') return;
+    console.error('Failed to load articles:', error);
+  }
 }
 
 const newPost = async (planet) => {
