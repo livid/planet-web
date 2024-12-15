@@ -1,7 +1,7 @@
 :root {
   --text-secondary-color: rgba(0, 0, 0, 0.5);
   --border-color: rgba(0, 0, 0, 0.1);
-  --hover-color: rgba(255, 255, 255, 0.35);
+  --hover-color: rgba(255, 255, 255, 0.45);
   --content-max-width: 320px;
   --content-min-width: 280px;
   --gap: 10px;
@@ -17,6 +17,7 @@
 
   --top-bar-color: #d5d8de;
   --body-color: #e6e7ec;
+  --main-area-color: #f0f1f6;
 }
 
 html {
@@ -52,17 +53,16 @@ body::-webkit-scrollbar {
 #content {
   padding: 0px;
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
 }
 
 .planets {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: var(--gap);
-  gap: var(--gap);
   margin-left: calc(env(safe-area-inset-left));
-  max-height: calc(100vh - 30px);
+  max-height: calc(100vh - 31px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  border-right: 1px solid var(--border-color);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--border-color) var(--body-color);
@@ -76,8 +76,7 @@ body::-webkit-scrollbar {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border-bottom: 1px solid var(--border-color);
   width: 100%;
   max-width: var(--content-max-width);
   min-width: var(--content-min-width);
@@ -126,14 +125,15 @@ body::-webkit-scrollbar {
 
 .planet-details {
   box-sizing: border-box;
-  margin: 0px auto 0px auto;
   display: flex;
   flex-direction: column;
   width: 100%;
   flex: 1;
+  background-color: var(--main-area-color);
   border: 1px solid var(--border-color);
   border-radius: 5px;
   box-sizing: border-box;
+  margin-top: var(--gap);
   margin-bottom: var(--gap);
   margin-right: calc(env(safe-area-inset-right) + var(--gap));
   margin-left: var(--gap);
