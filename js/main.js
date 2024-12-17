@@ -146,12 +146,15 @@ const submitEditPost = (planet, article) => {
   if (attachment) {
     formData.append('attachment', attachment);
   }
+  let buttons = document.getElementById('edit-post-buttons');
+  showSending(buttons);
   fetch(`/v0/planets/my/${planet.id}/articles/${article.id}`, {
     method: 'POST',
     body: formData
   }).then(response => {
     if (response.ok) {
       closeEditPostModal();
+      hideSending(buttons);
       loadArticles(planet);
     }
   });
@@ -163,6 +166,9 @@ const showLoading = () => {
   let loading = document.createElement('div');
   loading.classList.add('loading');
   loading.innerText = 'Loading...';
+  // Fine-tune the loading element for the article list
+  loading.style.padding = '10px 10px 10px 32px';
+  loading.style.backgroundPosition = '10px 10px';
   planetArticlesList.appendChild(loading);
 }
 
@@ -324,6 +330,27 @@ const loadArticles = async (planet) => {
   }
 }
 
+const showSending = (elem) => {
+  elem.dataset.originalContent = elem.innerHTML;
+
+  const sending = document.createElement('div');
+  sending.classList.add('loading');
+  sending.style.padding = '6px 10px 6px 24px';
+  sending.style.backgroundPosition = '0px 6px';
+  sending.innerText = 'Sending...';
+
+  elem.innerHTML = '';
+  elem.appendChild(sending);
+}
+
+const hideSending = (elem) => {
+  if (elem.dataset.originalContent) {
+    elem.innerHTML = elem.dataset.originalContent;
+  } else {
+    elem.innerHTML = '';
+  }
+}
+
 const newPost = async (planet) => {
   let modal = document.getElementById('new-post-modal');
   let modalTitle = document.getElementById('new-post-modal-title');
@@ -375,6 +402,9 @@ const submitNewPost = async () => {
     formData.append('attachment', attachment);
   }
 
+  let buttons = document.getElementById('new-post-buttons');
+  showSending(buttons);
+
   fetch(`/v0/planets/my/${planet.id}/articles`, {
     method: 'POST',
     body: formData
@@ -382,6 +412,7 @@ const submitNewPost = async () => {
     if (response.ok) {
       clearInputs();
       closeNewPostModal();
+      hideSending(buttons);
       loadArticles(planet);
     }
   });

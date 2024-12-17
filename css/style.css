@@ -178,14 +178,16 @@ body::-webkit-scrollbar {
 .loading {
   font-size: 12px;
   font-weight: 500;
+  line-height: 16px;
   color: var(--text-secondary-color);
-  padding: 10px;
+  padding: 0px;
   display: flex;
   padding-left: 32px;
   background-image: url("../img/spinner.gif");
   background-size: 16px 16px;
   background-repeat: no-repeat;
-  background-position: 10px 10px;
+  background-position: 10px 6px;
+  align-items: center;
 }
 
 .planet-article-item {
