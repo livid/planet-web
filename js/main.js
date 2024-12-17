@@ -182,7 +182,8 @@ const hideLoading = () => {
 
 export async function loadPlanets() {
   try {
-    const response = await fetch(`/v0/planets/my`);
+    const cacheBuster = Math.random();
+    const response = await fetch(`/v0/planets/my?r=${cacheBuster}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -227,6 +228,11 @@ export async function loadPlanets() {
       let lastSelectedPlanet = planets.find(planet => planet.id === lastSelectedPlanetId);
       if (lastSelectedPlanet) {
         await loadPlanet(lastSelectedPlanet);
+      }
+    } else {
+      /* Load the first Planet */
+      if (planets.length > 0) {
+        await loadPlanet(planets[0]);
       }
     }
   } catch (error) {
