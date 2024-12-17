@@ -110,6 +110,7 @@ const openEditArticleModal = (planet, article) => {
   // Populate the edit post modal with the current article data
   let title = document.getElementById('edit-post-title');
   title.value = article.title;
+  title.focus();
   let content = document.getElementById('edit-post-content');
   content.value = article.content;
   let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true, onSubmit: () => submitEditPost(planet, article) });
@@ -333,6 +334,8 @@ const newPost = async (planet) => {
   modalTitle.innerText = `New Post on ${planet.name}`;
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
 
+  let title = document.getElementById('new-post-title');
+  title.focus();
   let content = document.getElementById('new-post-content');
   let cleanup = addMarkdownAutocomplete(content, { listMarkers: ['- ', '* '], supportNumberedLists: true, supportTaskLists: true, onSubmit: submitNewPost });
 
