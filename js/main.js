@@ -77,6 +77,12 @@ const openArticleModal = (planet, article) => {
     closeArticleModal();
     openEditArticleModal(planet, article);
   };
+  const shareButton = document.getElementById('article-modal-share');
+  shareButton.onclick = () => {
+    const shareableLink = `https://${planet.ipns}.eth.sucks/${article.id}/`;
+    // Open in a new tab
+    window.open(shareableLink, '_blank');
+  }
   const closeButton = document.getElementById('article-modal-close');
   closeButton.onclick = () => {
     closeArticleModal();
