@@ -23,7 +23,8 @@ jobs:
 
       - name: Create info.json
         run: |
-          echo "{\"version\": ${{ steps.get_version.outputs.version }}}" > info.json
+          TAG_NAME=${GITHUB_REF#refs/tags/}
+          echo "{\"version\": \"${{ steps.get_version.outputs.version }}\", \"tag\": \"$TAG_NAME\"}" > info.json
 
       - name: Create ZIP archive
         run: zip -r app.zip . -x "*.git*"
