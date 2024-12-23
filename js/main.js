@@ -88,6 +88,9 @@ const openArticleModal = (planet, article) => {
     closeArticleModal();
   };
   modal.style.display = 'block';
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeArticleModal();
+  });
   document.body.style.overflow = 'hidden';
   document.documentElement.style.overflow = 'hidden';
   avatar.style.backgroundImage = `url('/${planet.id}/avatar.png')`;
@@ -297,7 +300,7 @@ const loadArticles = async (planet) => {
   try {
     const response = await fetch(`/v0/planets/my/${planet.id}/articles`, { signal: controller.signal });
     const data = await response.json();
-    
+
     if (controller.signal.aborted) return;
 
     let planetDetails = document.querySelector('.planet-details');
@@ -310,7 +313,7 @@ const loadArticles = async (planet) => {
     } else {
       planetArticlesCount.innerText = `${data.length} posts`;
     }
-    
+
     data.filter(article => article.articleType === 0).forEach(article => {
       let planetArticleItem = document.createElement('div');
       planetArticleItem.classList.add('planet-article-item');
