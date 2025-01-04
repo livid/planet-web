@@ -194,6 +194,7 @@ body::-webkit-scrollbar {
   padding: 10px;
   font-size: 14px;
   transition: background-color var(--transition-duration);
+  line-break: anywhere;
 }
 
 .planet-article-item:hover {
