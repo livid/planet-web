@@ -422,3 +422,13 @@ body::-webkit-scrollbar {
     font-size: 16px;
   }
 }
+
+@media screen and (max-width: 400px) {
+  .planets {
+    max-width: 40%;
+  }
+
+  .planet-details-stats {
+    flex-direction: column;
+  }
+}
